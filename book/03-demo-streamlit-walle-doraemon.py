@@ -54,6 +54,7 @@ title_vectors = vectorizer.fit_transform(data['title'])
 # 计算余弦相似度
 cosine_sim = cosine_similarity(title_vectors)
 
+dataset = pd.read_csv(r'book/data/book_douban2.csv')
 def recommend_books_by_rating(rating):
     predictions = model.predict([dataset.user_id, dataset.book_id])
     dataset['predicted_rating'] = predictions
