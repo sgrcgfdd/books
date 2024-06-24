@@ -29,13 +29,13 @@ def recommend_similar_books(book_id, top_n=5):
     return similar_indices
 
 # 读取新数据集
-new_dataset = pd.read_csv(r'book/data/book_douban2.csv')
+new_dataset = pd.read_csv(r'book/data/book_douban.csv')
 
 # 建立映射关系
 book_info_map = new_dataset.set_index('book_id').to_dict(orient='index')
 
 # 读取数据集
-data = pd.read_csv(r'book/data/book_douban2.csv')
+data = pd.read_csv(r'book/data/book_douban.csv')
 
 # 确保数据集中包含书名、作者和出版日期列
 required_columns = ['title', 'author', '出版社','出版时间']
@@ -60,17 +60,21 @@ def get_recommendations(keyword, cosine_sim=cosine_sim):
     keyword_vector = vectorizer.transform([keyword_processed])
     sim_scores = cosine_similarity(keyword_vector, title_vectors).flatten()
     sim_scores_sorted = sorted(enumerate(sim_scores), key=lambda x: x[1], reverse=True)
-    book_indices = [i[0] for i in sim_scores_sorted[1:6]]
+    book_indices = [i[0] for i in sim_scores_sorted[1:6] if i[1] > 0]  # 只取相似度大于0的书籍
+    if not book_indices:
+        return "当前数据库内没有相关书籍"
     return data[['title', 'author', '出版社','出版时间']].iloc[book_indices]
 
 # Streamlit应用
 st.title('图书推荐系统')
-
 
 # 基于关键词的推荐
 st.header('基于关键词的推荐')
 keyword = st.text_input('输入关键词')
 if st.button('为关键词推荐图书'):
     recommendations = get_recommendations(keyword)
-    st.write(recommendations)
+    if isinstance(recommendations, str):
+        st.write(recommendations)
+    else:
+        st.write(recommendations)
 
