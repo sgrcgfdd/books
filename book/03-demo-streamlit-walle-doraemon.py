@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 warnings.filterwarnings('ignore')  # 忽略告警
 
 # 加载模型
-model = tf.keras.models.load_model(r'\model\regression_model2_1.h5')
+model = tf.keras.models.load_model(r'/book/model/regression_model2_1.h5')
 book_embedding_matrix = model.get_layer('Book-Embedding').get_weights()[0]
 user_embedding_matrix = model.get_layer('User-Embedding').get_weights()[0]
 
@@ -74,7 +74,7 @@ def get_recommendations(keyword, cosine_sim=cosine_sim):
     keyword_vector = vectorizer.transform([keyword_processed])
     sim_scores = cosine_similarity(keyword_vector, title_vectors).flatten()
     sim_scores_sorted = sorted(enumerate(sim_scores), key=lambda x: x[1], reverse=True)
-    book_indices = [i[0] for i in sim_scores_sorted[1:11]]
+    book_indices = [i[0] for i in sim_scores_sorted[1:6]]
     return data[['title', 'author', '出版时间']].iloc[book_indices]
 
 # Streamlit应用
