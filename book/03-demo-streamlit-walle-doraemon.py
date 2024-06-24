@@ -29,7 +29,7 @@ def recommend_similar_books(book_id, top_n=5):
     return similar_indices
 
 # 读取数据集
-dataset = pd.read_csv(r'\data\book_douban.csv')
+dataset = pd.read_csv(r'/book/data/book_douban.csv')
 
 def validate_input(user_id, book_id):
     if user_id < 0 or user_id >= user_embedding_matrix.shape[0]:
@@ -75,7 +75,7 @@ def get_recommendations(keyword, cosine_sim=cosine_sim):
     sim_scores = cosine_similarity(keyword_vector, title_vectors).flatten()
     sim_scores_sorted = sorted(enumerate(sim_scores), key=lambda x: x[1], reverse=True)
     book_indices = [i[0] for i in sim_scores_sorted[1:6]]
-    return data[['title', 'author', '出版时间']].iloc[book_indices]
+    return data[['title', 'author', '出版社','出版时间']].iloc[book_indices]
 
 # Streamlit应用
 st.title('图书推荐系统')
