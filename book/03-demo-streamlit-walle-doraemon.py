@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 warnings.filterwarnings('ignore')  # 忽略告警
 
 # 加载模型
-model = tf.keras.models.load_model('D:\\regression_model2_1.h5')
+model = tf.keras.models.load_model(r'\model\regression_model2_1.h5')
 book_embedding_matrix = model.get_layer('Book-Embedding').get_weights()[0]
 user_embedding_matrix = model.get_layer('User-Embedding').get_weights()[0]
 
@@ -29,7 +29,7 @@ def recommend_similar_books(book_id, top_n=5):
     return similar_indices
 
 # 读取数据集
-dataset = pd.read_csv('D:\\book_douban.csv')
+dataset = pd.read_csv(r'\data\book_douban.csv')
 
 def validate_input(user_id, book_id):
     if user_id < 0 or user_id >= user_embedding_matrix.shape[0]:
@@ -49,7 +49,7 @@ def recommend_books_by_rating(rating):
     return recommended_books
 
 # 读取数据集
-data = pd.read_csv('D:\\book_douban.csv')
+data = pd.read_csv(r'\data\book_douban.csv')
 
 # 确保数据集中包含书名、作者和出版日期列
 required_columns = ['title', 'author', '出版时间']
