@@ -29,13 +29,13 @@ def recommend_similar_books(book_id, top_n=5):
     return similar_indices
 
 # 读取新数据集
-new_dataset = pd.read_csv(r'book/data/book_douban.csv')
+new_dataset = pd.read_csv(r'book/data/book_douban1.csv')
 
 # 建立映射关系
 book_info_map = new_dataset.set_index('book_id').to_dict(orient='index')
 
 # 读取数据集
-data = pd.read_csv(r'book/data/book_douban.csv')
+data = pd.read_csv(r'book/data/book_douban1.csv')
 
 # 确保数据集中包含书名、作者和出版日期列
 required_columns = ['title', 'author', '出版社','出版时间']
