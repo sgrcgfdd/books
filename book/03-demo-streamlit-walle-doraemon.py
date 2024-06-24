@@ -54,6 +54,16 @@ title_vectors = vectorizer.fit_transform(data['title'])
 # 计算余弦相似度
 cosine_sim = cosine_similarity(title_vectors)
 
+def recommend_books_by_rating(rating):
+    predictions = model.predict([dataset.user_id, dataset.book_id])
+    dataset['predicted_rating'] = predictions
+    tolerance = 0.1
+    filtered_books = dataset[(dataset['predicted_rating'] >= rating - tolerance) & (dataset['predicted_rating'] <= rating + tolerance)]
+    if len(filtered_books) < 10:
+        return filtered_books
+    recommended_books = filtered_books.sample(n=10, random_state=42)
+    return recommended_books
+
 # 推荐函数
 def get_recommendations(keyword, cosine_sim=cosine_sim):
     keyword_processed = ' '.join(jieba.lcut(keyword))
@@ -77,4 +87,12 @@ if st.button('点我点我'):
         st.write(recommendations)
     else:
         st.write(recommendations)
+        
+# 基于评分的推荐
+st.header('基于评分的推荐')
+input_rating = st.number_input('输入评分值', min_value=0.0, max_value=5.0, value=3.0)
+if st.button('为评分推荐图书'):
+    recommended_books = recommend_books_by_rating(input_rating)
+    st.write(f'推荐的书单（评分值为 {input_rating}):')
+    st.write(recommended_books[['book_id', 'title', 'author']])
 
