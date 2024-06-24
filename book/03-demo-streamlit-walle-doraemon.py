@@ -90,9 +90,9 @@ if st.button('点我点我'):
         st.write(recommendations)
         
 # 基于评分的推荐
-st.header('基于评分的推荐')
-input_rating = st.number_input('输入评分值', min_value=0.0, max_value=5.0, value=3.0)
-if st.button('为评分推荐图书'):
+st.header('想看什么品质的书？自己打分！')
+input_rating = st.number_input('想品高分好书还是赤低分作品？在这里输入x（ps：0<x<5,）', min_value=0.0, max_value=5.0, value=3.0)
+if st.button('点我点我'):
     recommended_books = recommend_books_by_rating(input_rating)
     st.write(f'推荐的书单（评分值为 {input_rating}):')
     st.write(recommended_books[['book_id', 'title', 'author']])
