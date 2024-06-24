@@ -1,0 +1,9 @@
+streamlit
+sklearn.metrics.pairwise
+cosine_similarity
+tensorflow
+pandas
+warnings
+jieba
+sklearn.feature_extraction.text
+TfidfVectorizer
