@@ -62,16 +62,16 @@ def get_recommendations(keyword, cosine_sim=cosine_sim):
     sim_scores_sorted = sorted(enumerate(sim_scores), key=lambda x: x[1], reverse=True)
     book_indices = [i[0] for i in sim_scores_sorted[1:6] if i[1] > 0]  # 只取相似度大于0的书籍
     if not book_indices:
-        return "当前数据库内没有相关书籍"
+        return "抱一丝咱书库里暂时没有呢要不换个词亲？"
     return data[['title', 'author', '出版社','出版时间']].iloc[book_indices]
 
 # Streamlit应用
 st.title('图书推荐系统')
 
 # 基于关键词的推荐
-st.header('基于关键词的推荐')
-keyword = st.text_input('输入关键词')
-if st.button('为关键词推荐图书'):
+st.header('基于大学生摸鱼无聊时灵光一现想到的第一个词的书籍推荐系统')
+keyword = st.text_input('现在脑袋里在想什么词？在这里输入吧（ps：仅限一词，多的不会）')
+if st.button('点我点我'):
     recommendations = get_recommendations(keyword)
     if isinstance(recommendations, str):
         st.write(recommendations)
